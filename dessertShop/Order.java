@@ -45,9 +45,51 @@ public class Order implements Payable {
 
 	public DessertItem add(DessertItem dessert) {
 		try {
-			order.add(dessert);
+			boolean isAdded = false;
+			if (dessert instanceof Candy){
+				for (DessertItem candy: order){
+					try {
+						if (((Candy) candy).isSameAs(dessert)) {
+							double newWeight = ((Candy) dessert).getCandyWeight();
+							double oldWeight = ((Candy) candy).getCandyWeight();
+							((Candy) candy).setCandyWeight(newWeight + oldWeight);
+							isAdded = true;
+						}//if(((Candy) candy).isSameAs(dessert))
+					}catch(ClassCastException notCandy){
+						continue;
+					}//end try / catch
+				}//end for (DessertItem candy: order)
+				if(isAdded){
+					//do nothing
+				}else{//if the candy item doesn't match anything, add it to the list as its own line item
+					order.add(dessert);
+				}
+			}else if (dessert instanceof Cookie){ //this isn't a candy, is it a cookie?
+				for (DessertItem cookie: order){
+					try {
+						if (((Cookie) cookie).isSameAs(dessert)) {
+							int newQuantity = ((Cookie) dessert).getCookieQuantity();
+							int oldQuantity = ((Cookie) dessert).getCookieQuantity();
+							((Cookie) cookie).setCookieQuantity(newQuantity + oldQuantity);
+							isAdded = true;
+						}//end if (((Cookie) cookie).isSameAs(dessert))
+					}catch(ClassCastException notCookie){
+						continue;
+					}//end try / catch
+				}//end for (DessertItem cookie: order)
+				if(isAdded){
+					//do nothing
+				}else{//if the cookie item doesn't match anything, add it to the list as its own line item
+					order.add(dessert);
+				}
+			//end if (dessert instanceof Cookie)
+			}else {//it's not a cookie or a candy item=
+				order.add(dessert);
+			}//end if (dessert instanceof Candy) & if (dessert instanceof Cookie)
+
 		} catch (Exception e) {
 			System.out.printf("failed to add %s to the order", dessert.toString());
+			e.printStackTrace();
 		} // end try / catch order.add(dessert);
 		return dessert;
 	}// end public DessertItem add(DessertItem dessert)

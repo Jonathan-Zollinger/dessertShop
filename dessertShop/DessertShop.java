@@ -16,6 +16,32 @@ public class DessertShop {
         DessertItem orderItem;
 
         boolean done = false;
+        order1.add(new Candy(
+                "Candy Corn",
+                1.5,
+                0.25));
+        order1.add(new Candy(
+                "Gummy Bears",
+                .25,
+                .35));
+        order1.add(new Cookie(
+                "Chocolate Chip",
+                6,
+                3.99));
+        order1.add(new IceCream(
+                "Pistachio",
+                2,
+                .79));
+        order1.add(new Sundae(
+                "Vanilla",
+                3,
+                .69,
+                "Hot Fudge",
+                1.29));
+        order1.add(new Cookie(
+                "Oatmeal Raisin",
+                2,
+                3.45));
         while (!done) {
             System.out.println("\n1: Candy");
             System.out.println("2: Cookie");
@@ -49,34 +75,6 @@ public class DessertShop {
             }//end of if (choice.equals(""))
         }//end of while (!done)
         System.out.println("\n");
-
-        sale.add(new Candy(
-                "Candy Corn",
-                1.5,
-                0.25));
-        sale.add(new Candy(
-                "Gummy Bears",
-                .25,
-                .35));
-        sale.add(new Cookie(
-                "Chocolate Chip",
-                6,
-                3.99));
-        sale.add(new IceCream(
-                "Pistachio",
-                2,
-                .79));
-        sale.add(new Sundae(
-                "Vanilla",
-                3,
-                .69,
-                "Hot Fudge",
-                1.29));
-        sale.add(new Cookie(
-                "Oatmeal Raisin",
-                2,
-                3.45));
-        
         
         //Sorting the list         
         Collections.sort(order1.getOrderList());

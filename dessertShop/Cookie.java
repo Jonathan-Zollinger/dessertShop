@@ -1,6 +1,6 @@
 package dessertShop;
 
-public class Cookie extends DessertItem {
+public class Cookie extends DessertItem implements SameItem{
 
 	// fields
 	private int cookieQuantity;
@@ -55,7 +55,19 @@ public class Cookie extends DessertItem {
 		double cost;
 		cost = cookieQuantity * (pricePerDozen/12) ;
 		return cost;
-		
+	}
+	public boolean isSameAs(Cookie other) {
+		if(this.getPricePerDozen() == other.getPricePerDozen()
+				&& this.getName().equalsIgnoreCase(other.getName())){
+			return true;
+		}else{
+			return false;
+		}
+	}//end public boolean isSameAs(Candy other)
+
+
+	public boolean isSameAs(Object other) {
+		return false;
 	}
 
 
