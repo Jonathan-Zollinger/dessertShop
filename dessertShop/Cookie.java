@@ -26,10 +26,12 @@ public class Cookie extends DessertItem implements SameItem{
 	// methods
 
 	public String toString(){
-		return String.format("%s Cookies (%s)\n\t%-45d cookies @ $%.2f/dozen.: \t\t$%.2f\t[Tax: $%.2f]\n",
+		String numerator = "cookies @ $";
+		return String.format("%s Cookies (%s)\n\t%-3d %-10s %.2f/dozen.:\t$%.2f\t[Tax: $%.2f]\n",
 				getName(),
 				getPackaging(),
 				getCookieQuantity(),
+				numerator,
 				getPricePerDozen(),
 				calculateCost(),
 				calculateTax());

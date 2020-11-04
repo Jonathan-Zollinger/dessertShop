@@ -25,10 +25,12 @@ public class Candy extends DessertItem implements SameItem{
 	// methods
 
 	public String toString(){
-		return String.format("%s (%s)\n\t%-45f lbs @ $%.2f/lb.: \t\t$%.2f\t[Tax: $%.2f]\n",
+		String numerator = " lbs @ $";
+		return String.format("%s (%s)\n\t%-3.2f%-10s%.2f/lb.: \t\t$%.2f\t[Tax: $%.2f]\n",
 				getName(),
 				getPackaging(),
 				getCandyWeight(),
+				numerator,
 				getPricePerPound(),
 				calculateCost(),
 				calculateTax());

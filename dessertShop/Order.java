@@ -20,15 +20,15 @@ public class Order implements Payable {
 	// methods
 	public String toString(){
 		String finalOutput = "";
-		finalOutput += "------------------------Receipt-------------------\n";
+		finalOutput += "-------------------------Receipt-------------------------\n";
 		for(DessertItem sale: order){
 			finalOutput += sale.toString();
 		}//end for(DessertItem sale: order)
-		String lines = "--------------------------------------------------\n";
+		String lines = "---------------------------------------------------------\n";
 		finalOutput += lines;
-		String totals = String.format("Total number of items in order: %8d\n" +
-				"Order Subtotals:\t\t$%.2f\t[Tax: $%.2f]\n" +
-				"Order Total:\t\t\t$%.2f\n",
+		String totals = String.format("Total number of items in order: %d\n" +
+				"Order Subtotals:\t\t\t\t\t$%.2f\t[Tax: $%.2f]\n" +
+				"Order Total:\t\t\t\t\t\t$%.2f\n",
 				itemCount(),
 				orderCost(),
 				orderTax(),

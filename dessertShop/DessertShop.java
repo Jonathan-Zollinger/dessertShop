@@ -96,7 +96,7 @@ public class DessertShop {
 			PayType enumanswer = PayType.valueOf(answer);
 			order1.setPayType(enumanswer);
 			System.out.print(order1.toString());
-			System.out.println("\n\n--------------------------------------------------\n");
+			System.out.println("\n\n---------------------------------------------------------\n");
 			System.out.printf("Customer Name: %s \t Customer ID: %d     Total orders: %d", 
 					customer.getName(),
 					customer.getID(),
