@@ -1,94 +1,110 @@
 package dessertShop;
 
-import java.util.Collections;
-import java.util.Scanner;
+import java.util.*;
 
 import dessertShop.Payable.PayType;
 
 public class DessertShop {
+	
+	private static HashMap<String,Customer> customerDB = new HashMap<String,Customer>();
+	
     public static void main(String[] args){
-        Order sale = new Order();
-        Order order1 = new Order();
-        String paymentMethod; //I think this should be of a PayType class.
+        
+    	
+    	boolean closed = false;
+    	
+    	while (!closed) {
+			//Order sale = new Order();
+			Order order1 = new Order();
+			String paymentMethod; //I think this should be of a PayType class.
+			Scanner sIn = new Scanner(System.in);
+			String choice;
+			DessertItem orderItem;
+			boolean done = false;
+			order1.add(new Candy("Candy Corn", 1.5, 0.25));
+			order1.add(new Candy("Gummy Bears", .25, .35));
+			order1.add(new Cookie("Chocolate Chip", 6, 3.99));
+			order1.add(new IceCream("Pistachio", 2, .79));
+			order1.add(new Sundae("Vanilla", 3, .69, "Hot Fudge", 1.29));
+			order1.add(new Cookie("Oatmeal Raisin", 2, 3.45));
+			while (!done) {
+				System.out.println("\n1: Candy");
+				System.out.println("2: Cookie");
+				System.out.println("3: Ice Cream");
+				System.out.println("4: Sunday");
 
-        Scanner sIn = new Scanner(System.in);
-        String choice;
-        DessertItem orderItem;
+				System.out.print("\nWhat would you like to add to the order? (1-4, Enter for done): ");
+				choice = sIn.nextLine();
 
-        boolean done = false;
-        order1.add(new Candy(
-                "Candy Corn",
-                1.5,
-                0.25));
-        order1.add(new Candy(
-                "Gummy Bears",
-                .25,
-                .35));
-        order1.add(new Cookie(
-                "Chocolate Chip",
-                6,
-                3.99));
-        order1.add(new IceCream(
-                "Pistachio",
-                2,
-                .79));
-        order1.add(new Sundae(
-                "Vanilla",
-                3,
-                .69,
-                "Hot Fudge",
-                1.29));
-        order1.add(new Cookie(
-                "Oatmeal Raisin",
-                2,
-                3.45));
-        while (!done) {
-            System.out.println("\n1: Candy");
-            System.out.println("2: Cookie");
-            System.out.println("3: Ice Cream");
-            System.out.println("4: Sunday");
-
-            System.out.print("\nWhat would you like to add to the order? (1-4, Enter for done): ");
-            choice = sIn.nextLine();
-
-            if (choice.equals("")) {
-                done = true;
-            } else {
-                switch (choice) {
-                    case "1":
-                        orderItem = userPromptCandy();
-                        order1.add(orderItem);
-                        break;
-                    case "2":
-                        orderItem = userPromptCookie();
-                        order1.add(orderItem);
-                        break;
-                    case "3":
-                        orderItem = userPromptIceCream();
-                        order1.add(orderItem);
-                        break;
-                    case "4":
-                        orderItem = userPromptSundae();
-                        order1.add(orderItem);
-                        break;
-                }//end of switch (choice)
-            }//end of if (choice.equals(""))
-        }//end of while (!done)
-        System.out.println("\n");
-        
-        //Sorting the list         
-        Collections.sort(order1.getOrderList());
-        
-        
-        //asking the user the payment method
-        String answer = askForPaymentMethod();
-        answer = answer.toUpperCase();
-        
-        PayType enumanswer =  PayType.valueOf(answer);
-        
-        order1.setPayType(enumanswer);
-        
-        System.out.print(order1.toString());
+				if (choice.equals("")) {
+					done = true;
+				} else {
+					switch (choice) {
+					case "1":
+						orderItem = userPromptCandy();
+						order1.add(orderItem);
+						break;
+					case "2":
+						orderItem = userPromptCookie();
+						order1.add(orderItem);
+						break;
+					case "3":
+						orderItem = userPromptIceCream();
+						order1.add(orderItem);
+						break;
+					case "4":
+						orderItem = userPromptSundae();
+						order1.add(orderItem);
+						break;
+					}//end of switch (choice)
+				} //end of if (choice.equals(""))
+			} //end of while (!done)
+			System.out.println("\n");
+			//Sorting the list         
+			Collections.sort(order1.getOrderList());
+			
+			//asking for customer name
+			//boolean isAdded = false;
+			System.out.println("Enter the customer name: ");
+			String name = sIn.nextLine();
+			Customer customer;
+			try {
+				customer = customerDB.get(name);
+				customer.addToHistory(order1);
+				
+			}catch(Exception e){
+				customer = new Customer (name);
+				customer.addToHistory(order1);
+				customerDB.put(name, customer);
+			}
+			
+			
+			/*for(String customer : customerDB.keySet()) {
+				if (customer.equalsIgnoreCase(name)) {
+					isAdded = true;
+				}
+			}
+			if(!isAdded) {
+				Customer 
+				customerDB.put(name, customerObj);
+			}*/
+			
+			
+			//asking the user the payment method
+			String answer = askForPaymentMethod();
+			answer = answer.toUpperCase();
+			PayType enumanswer = PayType.valueOf(answer);
+			order1.setPayType(enumanswer);
+			System.out.print(order1.toString());
+			System.out.println("\n\n--------------------------------------------------\n");
+			System.out.printf("Customer Name: %s \t Customer ID: %d     Total orders: %d", 
+					customer.getName(),
+					customer.getID(),
+					customer.getOrderHistory().size());
+			System.out.println("\nHit enter to start a new order");
+			sIn.nextLine();
+			
+		}
 
 //        //print all the names of the dessert items
 //        for (DessertItem item : sale.getOrderList()) {
@@ -319,7 +335,9 @@ public class DessertShop {
         Sundae sundae = new Sundae(name,scoopcnt,priceperscp,topname,topprice);
 
         return sundae;
-    }//end private static DessertItem userPromptSundae(){
+    }//end private static DessertItem userPromptSundae()
+    
+    
 
 
 }//end public class DessertShop
