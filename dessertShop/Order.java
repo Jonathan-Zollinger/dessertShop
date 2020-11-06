@@ -20,15 +20,15 @@ public class Order implements Payable {
 	// methods
 	public String toString(){
 		String finalOutput = "";
-		finalOutput += "------------------------Receipt-------------------\n";
+		finalOutput += "-------------------------Receipt-------------------------\n";
 		for(DessertItem sale: order){
 			finalOutput += sale.toString();
 		}//end for(DessertItem sale: order)
-		String lines = "--------------------------------------------------\n";
+		String lines = "---------------------------------------------------------\n";
 		finalOutput += lines;
-		String totals = String.format("Total number of items in order: %8d\n" +
-				"Order Subtotals:\t\t$%.2f\t[Tax: $%.2f]\n" +
-				"Order Total:\t\t\t$%.2f\n",
+		String totals = String.format("Total number of items in order: %d\n" +
+				"Order Subtotals:\t\t\t\t\t$%.2f\t[Tax: $%.2f]\n" +
+				"Order Total:\t\t\t\t\t\t$%.2f\n",
 				itemCount(),
 				orderCost(),
 				orderTax(),
@@ -44,12 +44,48 @@ public class Order implements Payable {
 	}// end public ArrayList<DessertItem> getOrderList()
 
 	public DessertItem add(DessertItem dessert) {
-		try {
+		boolean isAdded = false;
+		if (dessert instanceof Candy){
+			for (DessertItem candy: order){
+				try {
+					if (((Candy) candy).isSameAs((Candy) dessert)) {
+						double newWeight = ((Candy) dessert).getCandyWeight();
+						double oldWeight = ((Candy) candy).getCandyWeight();
+						((Candy) candy).setCandyWeight(newWeight + oldWeight);
+						isAdded = true;
+					}//if(((Candy) candy).isSameAs(dessert))
+				}catch(ClassCastException notCandy){
+					continue;
+				}//end try / catch
+			}//end for (DessertItem candy: order)
+			if(isAdded){
+				return dessert;
+			}else{//if the candy item doesn't match anything, add it to the list as its own line item
+				order.add(dessert);
+			}
+		}else if (dessert instanceof Cookie){ //this isn't a candy, is it a cookie?
+			for (DessertItem cookie: order){
+				try {
+					if (((Cookie) cookie).isSameAs((Cookie) dessert)) {
+						int newQuantity = ((Cookie) dessert).getCookieQuantity();
+						int oldQuantity = ((Cookie) cookie).getCookieQuantity();
+						((Cookie) cookie).setCookieQuantity(newQuantity + oldQuantity);
+						isAdded = true;
+					}//end if (((Cookie) cookie).isSameAs(dessert))
+				}catch(ClassCastException notCookie){
+					continue;
+				}//end try / catch
+			}//end for (DessertItem cookie: order)
+			if(isAdded){
+				return dessert;
+			}else{//if the cookie item doesn't match anything, add it to the list as its own line item
+				order.add(dessert);
+			}
+		//end if (dessert instanceof Cookie)
+		}else {//it's not a cookie or a candy item=
 			order.add(dessert);
-		} catch (Exception e) {
-			System.out.printf("failed to add %s to the order", dessert.toString());
-		} // end try / catch order.add(dessert);
-		return dessert;
+		}//end if (dessert instanceof Candy) & if (dessert instanceof Cookie)
+	return dessert;
 	}// end public DessertItem add(DessertItem dessert)
 
 	public int itemCount() {

@@ -5,6 +5,11 @@ import org.junit.jupiter.api.Test;
 import static org.junit.jupiter.api.Assertions.*;
 
 class CandyTest {
+    Candy chocolateBar      = new Candy("darkchocolate",1,3.49);
+    Candy chocolateChips    = new Candy("darkchocolate",3,3.49);
+    Candy swissChocolate    = new Candy("darkchocolate",1,13.49);
+    Candy caramelChew       = new Candy("caramel",0.5,5);
+    Candy hersheyBar        = new Candy("crapChocholate",0.0125,1.29);
 
     @Test
     void getName() {
@@ -54,6 +59,16 @@ class CandyTest {
     void calculateTax() {
         Candy chocolate = new Candy("darkchocolate",1,100);
         assertEquals(7.25,chocolate.calculateTax(),0.000001);
+    }
+
+    @Test
+    void isSameAsReturnsTrue(){
+        assertTrue(chocolateBar.isSameAs(chocolateChips));
+    }
+
+    @Test
+    void isSameAsReturnsFalse(){
+        assertFalse(chocolateBar.isSameAs(swissChocolate));
     }
 
 }

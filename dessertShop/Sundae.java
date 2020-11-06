@@ -34,8 +34,8 @@ public class Sundae extends IceCream {
 	// methods
 
 	public String toString(){
-		return String.format("%s Sundae (%s)\n%d Scoops of %s ice cream @ $%.2f/Scoop\n" +
-						"\t%s topping @ $%.2f: \t$%.2f\t[Tax: $%.2f]\n",
+		return String.format("%s Sundae (%s)\n\t%d Scoops of %s ice cream @ $%.2f/Scoop\n" +
+						"\t%s topping @ $%.2f: \t\t$%.2f\t[Tax: $%.2f]\n",
 				getToppingName(),
 				getPackaging(),
 				getScoopCount(),

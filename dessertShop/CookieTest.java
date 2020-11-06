@@ -6,6 +6,11 @@ import static org.junit.jupiter.api.Assertions.*;
 
 class CookieTest {
 
+    Cookie oatmealRaisin    = new Cookie("oatmeal",2,4.2);
+    Cookie oatmealCranberry = new Cookie("oatmeal",5,4.2);
+    Cookie oatmealShrimp    = new Cookie("oatmeal",5,10);
+
+
     @Test
     void getName() {
         Cookie chocolateChip = new Cookie("",2,4.2);
@@ -55,6 +60,16 @@ class CookieTest {
     void calculateTax() {
         Cookie chocolate = new Cookie("darkchocolate",12,100);
         assertEquals(7.25,chocolate.calculateTax(),0.000001);
+    }
+
+    @Test
+    void isSameAsReturnsTrue(){
+        assertTrue(oatmealRaisin.isSameAs(oatmealCranberry));
+    }
+
+    @Test
+    void isSameAsReturnsFalse(){
+        assertFalse(oatmealShrimp.isSameAs(oatmealCranberry));
     }
 
 }

@@ -28,7 +28,7 @@ public class IceCream extends DessertItem {
 	// methods
 
 	public String toString(){
-		return String.format("%s Ice Cream (%s)\n\t%-45d Scoops @ $%.2f/Scoop.: \t\t$%.2f\t[Tax: $%.2f]\n",
+		return String.format("%s Ice Cream (%s)\n\t%-3d Scoops @ $%.2f/Scoop.: \t\t$%.2f\t[Tax: $%.2f]\n",
 				getName(),
 				getPackaging(),
 				getScoopCount(),
